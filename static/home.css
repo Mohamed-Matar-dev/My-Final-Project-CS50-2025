@@ -1,0 +1,8 @@
+.task-options {
+  margin-left: auto;
+  display: flex;
+  gap: 5px;
+}
+.task-menu-btn {
+  margin-left: 10px;
+}

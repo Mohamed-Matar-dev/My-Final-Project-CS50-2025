@@ -14,6 +14,15 @@ Home
                 {{ task["title"] }}
             </label>
             <input type="checkbox" class="form-check-input">
+
+             <!-- Hamburger button -->
+              <button class="btn btn-light btn-sm task-menu-btn">&vellip;</button>
+
+              <!-- Hidden collapsible options -->
+              <div class="task-options d-none">
+                  <button class="btn btn-sm btn-primary edit-btn">Edit</button>
+                  <button class="btn btn-sm btn-danger delete-btn">Delete</button>
+              </div>
         </li>
     {% endif %}
     {% endfor %}
@@ -30,6 +39,15 @@ Home
                 {{ task["title"] }}
             </label>
             <input type="checkbox" class="form-check-input" checked>
+            
+              <!-- Hamburger button -->
+             <button class="btn btn-light btn-sm task-menu-btn">&vellip;</button>
+
+              <!-- Hidden collapsible options -->
+              <div class="task-options d-none">
+                  <button class="btn btn-sm btn-primary edit-btn">Edit</button>
+                  <button class="btn btn-sm btn-danger delete-btn">Delete</button>
+              </div>
         </li>
     {% endif %}
     {% endfor %}
