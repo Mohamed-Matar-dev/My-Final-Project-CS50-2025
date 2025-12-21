@@ -68,3 +68,29 @@ deleteBtn.forEach(btn => {
   });
 });
 
+editBtn.forEach(btn =>{
+  btn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    const li = e.target.closest("li");
+    const label = li.querySelector("label");
+    const taskId = li.id;
+
+    const currentText = label.textContent;
+    const newText = prompt("Edit task title", currentText);
+    if (newText && newText !== currentText){
+       fetch("/edit-task", {
+      method: "POST",
+      headers: {"Content-type": "application/json"},
+      body: JSON.stringify({id: taskId, title: newText})
+    }).then(response => {
+      if (response.ok){
+        label.textContent = newText; //update on the page
+      }else {
+        alert("Faild to edit task");
+      }
+    });
+
+    }
+
+  });
+});

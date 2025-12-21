@@ -67,3 +67,19 @@ def delete_task():
     db.close()
 
     return "", 204
+
+@app.route('/edit-task', methods= ["POST"])
+def edit_task():
+    data = request.json or {}
+    task_id = data.get("id")
+    new_title = data.get("title")
+
+    if not task_id or not new_title:
+        return "Error", 400
+    
+    db = get_db()
+    db.execute("UPDATE tasks SET title = ? WHERE id = ?", (new_title, task_id))
+    db.commit()
+    db.close()
+
+    return "",204
