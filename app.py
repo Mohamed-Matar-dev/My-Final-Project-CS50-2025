@@ -1,0 +1,52 @@
+from flask import Flask, render_template, request, redirect
+import sqlite3
+
+app = Flask(__name__)
+
+def get_db():
+    conn = sqlite3.connect("todo.db")
+    conn.row_factory = sqlite3.Row
+    return conn
+
+@app.after_request
+def after_request(response):
+    """Ensure responses aren't cached"""
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Expires"] = 0
+    response.headers["Pragma"] = "no-cache"
+    return response
+
+
+@app.route("/")
+def index():
+    db = get_db()
+    tasks = db.execute("SELECT * FROM tasks").fetchall()
+    db.close()
+
+    return render_template("index.html", tasks=tasks)
+
+@app.route("/add-task", methods=["GET", "POST"])
+def add_task():
+    if request.method =="POST":
+        task_name = request.form.get("task-name")
+        db = get_db()
+        db.execute("INSERT INTO tasks(title) VALUES(?)", (task_name,))
+        db.commit()
+        db.close()
+        return redirect("/")
+    return render_template("add-task.html")
+
+@app.route('/complete-task', methods=['POST'])
+def complete_task():
+    data = request.json or {}
+    task_id = data.get("id")
+    completed = 1 if data.get("completed") else 0
+    if not task_id:
+        return "Error", 400
+    
+    db = get_db()
+    db.execute("UPDATE tasks SET complete = ? WHERE id = ?", (completed, task_id))
+    db.commit()
+    db.close()
+
+    return "", 204

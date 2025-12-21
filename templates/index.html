@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block title %}
+Home
+{% endblock %}
+{% block main %}
+<div class="container mt-5 ">
+  <h2>Ongoing Tasks</h2>
+
+  <ol class="list-group list-group-numbered" id="ongoing-tasks">
+    {% for task in tasks %}
+    {% if task['complete'] == 0 %}
+        <li class="list-group-item d-flex align-items-center" id="{{ task['id'] }}">
+            <label class="flex-grow-1 mb-0">
+                {{ task["title"] }}
+            </label>
+            <input type="checkbox" class="form-check-input">
+        </li>
+    {% endif %}
+    {% endfor %}
+  </ol>
+</div>
+<div class="container mt-5 ">
+  <h2>Completed Tasks</h2>
+
+  <ol class="list-group list-group-numbered" id="completed-tasks">
+    {% for task in tasks %}
+    {% if task['complete'] == 1 %}
+        <li class="list-group-item d-flex align-items-center text-decoration-line-through" id="{{ task['id'] }}">
+            <label class="flex-grow-1 mb-0">
+                {{ task["title"] }}
+            </label>
+            <input type="checkbox" class="form-check-input" checked>
+        </li>
+    {% endif %}
+    {% endfor %}
+  </ol>
+</div>
+
+<script src="/static/home.js"></script>
+{% endblock%}
