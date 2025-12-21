@@ -4,31 +4,34 @@ Home
 {% endblock %}
 {% block main %}
 <div class="container mt-5 ">
+        <p class="text-muted d-none" id="empty-message-ongoing">No tasks yet. Add one!</p>
   <h2>Ongoing Tasks</h2>
 
   <ol class="list-group list-group-numbered" id="ongoing-tasks">
-    {% for task in tasks %}
-    {% if task['complete'] == 0 %}
-        <li class="list-group-item d-flex align-items-center" id="{{ task['id'] }}">
-            <label class="flex-grow-1 mb-0">
-                {{ task["title"] }}
-            </label>
-            <input type="checkbox" class="form-check-input">
+    
+      {% for task in tasks %}
+      {% if task['complete'] == 0 %}
+          <li class="list-group-item d-flex align-items-center" id="{{ task['id'] }}">
+              <label class="flex-grow-1 mb-0">
+                  {{ task["title"] }}
+              </label>
+              <input type="checkbox" class="form-check-input">
 
-             <!-- Hamburger button -->
-              <button class="btn btn-light btn-sm task-menu-btn">&vellip;</button>
+              <!-- Hamburger button -->
+                <button class="btn btn-light btn-sm task-menu-btn">&vellip;</button>
 
-              <!-- Hidden collapsible options -->
-              <div class="task-options d-none">
-                  <button class="btn btn-sm btn-primary edit-btn">Edit</button>
-                  <button class="btn btn-sm btn-danger delete-btn">Delete</button>
-              </div>
-        </li>
-    {% endif %}
-    {% endfor %}
+                <!-- Hidden collapsible options -->
+                <div class="task-options d-none">
+                    <button class="btn btn-sm btn-primary edit-btn">Edit</button>
+                    <button class="btn btn-sm btn-danger delete-btn">Delete</button>
+                </div>
+          </li>
+      {% endif %}
+      {% endfor %}
   </ol>
 </div>
 <div class="container mt-5 ">
+  <p class="text-muted d-none" id="empty-message-complete">No finished tasks yet.</p>
   <h2>Completed Tasks</h2>
 
   <ol class="list-group list-group-numbered" id="completed-tasks">

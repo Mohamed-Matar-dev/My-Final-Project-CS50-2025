@@ -5,6 +5,24 @@ const completedContainer = document.querySelector("#completed-tasks");
 // check box for all the list items
 const checkBox = document.querySelectorAll('input[type="checkbox"]');
 
+// menu to show options on the page 
+const taskMenuBtn = document.querySelectorAll(".task-menu-btn");
+
+const editBtn = document.querySelectorAll(".edit-btn");
+const deleteBtn = document.querySelectorAll(".delete-btn");
+
+function checkEmptyState() {
+  const ongoingTasks = ongoingContainer.querySelectorAll("li");
+  const completeTasks = completedContainer.querySelectorAll("li");
+
+  const emptyMessage1 = document.querySelector("#empty-message-ongoing");
+  const emptyMessage2 = document.querySelector("#empty-message-complete");
+
+  emptyMessage1.classList.toggle("d-none", ongoingTasks.length > 0);
+  emptyMessage2.classList.toggle("d-none", completeTasks.length > 0);
+}
+
+
 // making the check box works as intented
 checkBox.forEach(box => {
   box.addEventListener("change", (e) => {
@@ -29,14 +47,12 @@ checkBox.forEach(box => {
       ongoingContainer.appendChild(li);
       li.querySelector("label").classList.remove("text-decoration-line-through");
     }
+
+    checkEmptyState(); 
   });
 });
 
-// menu to show options on the page 
-const taskMenuBtn = document.querySelectorAll(".task-menu-btn");
 
-const editBtn = document.querySelectorAll(".edit-btn");
-const deleteBtn = document.querySelectorAll(".delete-btn");
 // the logic so each menu button work as way to show options
 taskMenuBtn.forEach((btn) => {
   btn.addEventListener("click", (event) => {
@@ -46,6 +62,10 @@ taskMenuBtn.forEach((btn) => {
     options.classList.toggle("d-none");
   });
 });
+
+
+
+
 // delete task logic 
 deleteBtn.forEach(btn => {
   btn.addEventListener("click", (e) => {
@@ -53,6 +73,10 @@ deleteBtn.forEach(btn => {
     const li = e.target.closest("li");
     const taskId = li.id;
     // sent post request to flask
+    const confirmed = confirm("Are you sure you want to delete this task?");
+    if (!confirmed) return;
+
+    btn.disabled = true;
     fetch("/delete-task", {
       method: "POST",
       headers: {"Content-type": "application/json"},
@@ -60,11 +84,13 @@ deleteBtn.forEach(btn => {
     }).then(response => {         // after the request sent wait for the return
       if (response.ok){
         li.remove(); // remove from the DOM
+        checkEmptyState();
       }else {
         alert("Faild to delete task");
       }
-    });
+    }).finally(() => btn.disabled = false);
 
+    
   });
 });
 
@@ -88,9 +114,16 @@ editBtn.forEach(btn =>{
       }else {
         alert("Faild to edit task");
       }
-    });
+    }).finally(() => btn.disabled = false);
 
     }
 
   });
 });
+
+document.addEventListener("click", () => {
+  document.querySelectorAll(".task-options")
+    .forEach(opt => opt.classList.add("d-none"));
+});
+
+checkEmptyState();

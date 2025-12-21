@@ -54,6 +54,8 @@ def complete_task():
 
     return "", 204
 
+# function to Delete the task, dosn't need correspodning HTML.
+# It shows in index.html, and it worked with home.js
 @app.route('/delete-task', methods=["POST"])
 def delete_task():
     data = request.json or {}
@@ -68,6 +70,8 @@ def delete_task():
 
     return "", 204
 
+# function to Edit the task, dosn't need correspodning HTML.
+# It shows in index.html, and it worked with home.js
 @app.route('/edit-task', methods= ["POST"])
 def edit_task():
     data = request.json or {}
