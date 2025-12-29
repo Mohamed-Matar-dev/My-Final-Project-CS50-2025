@@ -1,5 +1,11 @@
 # To-Do List Web Application
 
+## TL;DR
+A Flask-based to-do list web application with user authentication and full CRUD
+functionality, built as a CS50 final project.
+
+---
+
 ## Project Description
 
 This project is a web-based **To-Do List application** built as my final project for **CS50**.  
@@ -115,6 +121,12 @@ Bootstrap was used to speed up UI development while still allowing customization
 ---
 
 ## How to Run
+
+> **Note:** The database file (`todo.db`) is intentionally not included in the repository
+> and must be created manually. This prevents committing user data and keeps the
+> repository clean.
+
+
 1. Clone the repository:
     ```
      git clone <repo url> 
