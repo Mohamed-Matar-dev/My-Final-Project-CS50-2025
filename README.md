@@ -137,15 +137,35 @@ Bootstrap was used to speed up UI development while still allowing customization
     ```
     pip install -r requirements.txt
     ```
-5. Run the Flask app:
+5. Create the `todo.db` database:
+  - Schema:
+  ```
+    CREATE TABLE users (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      username TEXT NOT NULL,
+      email TEXT UNIQUE NOT NULL,
+      hash TEXT NOT NULL
+      );
+  ```
+  ```
+    CREATE TABLE tasks (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      title TEXT NOT NULL,
+      complete INTEGER DEFAULT 0,
+      user_id INTEGER NOT NULL,
+      FOREIGN KEY(user_id) REFERENCES users(id)
+    );
+  ```
+
+6. Run the Flask app:
     ```
     python app.py
     ```
-6. Open your browser and go to:
+7. Open your browser and go to:
     ```
     http://127.0.0.1:5000
     ```
-7. Sign up and log in to start using your personal to-do list!
+8. Sign up and log in to start using your personal to-do list!
 
 ---
 ## Requirements
