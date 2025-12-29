@@ -1,9 +1,5 @@
 # To-Do List Web Application
 
-#### Video Demo:
-
----
-
 ## Project Description
 
 This project is a web-based **To-Do List application** built as my final project for **CS50**.  
